@@ -22,18 +22,7 @@ env:
 
 on:
   push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
-    paths-ignore:
-      - README.md
-      - SECURITY.md
-      - Jenkinsfile
-      - Jenkinsfile.*
-      - NOTICE.txt
-
+    branches: [main]
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -87,11 +76,3 @@ jobs:
             -Dmaven.wagon.httpconnectionManager.ttlSeconds=120 \
             -pl '!:camel-kafka-connector-generator-maven-plugin' \
             clean test
-      - name: Archive logs
-        uses: actions/upload-artifact@v7
-        if: always()
-        with:
-          name: test-logs-java-${{ matrix.java }}
-          path: tests/**/target/tests.log
-
-
